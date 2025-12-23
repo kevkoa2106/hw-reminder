@@ -16,7 +16,7 @@ Project's features:
 
 *   Add Homework
 *   Change Homework status
-*   Reminds you when deadlione of hopmework getting close
+*   Reminds you when deadline of homework is getting close
 
   
   
