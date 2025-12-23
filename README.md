@@ -1,6 +1,6 @@
 <h1 align="center" id="title">Homework Reminder</h1>
 
-<p align="left"><img src="https://img.shields.io/badge/JavaFX-21.0.6-red" alt="shields"> <img src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge" alt="shields"></p>
+<p align="left"><img src="https://img.shields.io/badge/JavaFX-21.0.6-red" alt="shields">   <img src="https://img.shields.io/badge/Build-passing-brightgreen" alt="shields"></p>
 
 <p id="description">Just a little homework tracker/reminder</p>
 
