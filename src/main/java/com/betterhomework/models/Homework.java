@@ -31,6 +31,10 @@ public class Homework {
         return completed;
     }
 
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

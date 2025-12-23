@@ -35,7 +35,6 @@ public class HomeworkController {
     final private Path file = Paths.get("/Users/khoa/Documents/code shi/Java/better-homework/src/main/resources/com/betterhomework/data.csv");
 
     CsvData csvData;
-
     {
         try {
             csvData = CSVHandling.readFromCSV(file);
@@ -45,7 +44,18 @@ public class HomeworkController {
     }
 
     @FXML
-    private void btnInsert() throws IOException {
+    public void changeCompleted() throws IOException {
+        Homework selected = table.getSelectionModel().getSelectedItem();
+//        int selectedIndex = table.getSelectionModel().getSelectedIndex();
+        if (selected != null) {
+            selected.setCompleted(true);
+            table.refresh();
+            CSVHandling.updateCompleted(file, selected.getName(), true);
+        }
+    }
+
+    @FXML
+    public void btnInsert() throws IOException {
         if (nameField.getText().isEmpty()) {
             Toast.toast(ToastType.INFO, "Missing name", "Please select a time for the homework due date.");
             return;
@@ -63,7 +73,12 @@ public class HomeworkController {
             return;
         }
 
-        Homework newHomework = new Homework(nameField.getText(), subjectField.getText(), dueDatePicker.getValue().atTime(dateTimePicker.getTime()), false);
+        String name = nameField.getText();
+        String subject = subjectField.getText();
+        LocalDateTime dueDate = dueDatePicker.getValue().atTime(dateTimePicker.getTime());
+        boolean completed = false;
+
+        Homework newHomework = new Homework(name, subject, dueDate, completed);
         table.getItems().add(newHomework);
         nameField.clear();
         subjectField.clear();
@@ -94,7 +109,7 @@ public class HomeworkController {
         dateTimePicker.setEditable(true);
 
         for (int i = 0; i < csvData.rows().size(); i++) {
-            Homework savedHW = new Homework(getRow(i).getFirst(), getRow(i).get(1), LocalDateTime.parse(getRow(i).get(2)), Boolean.parseBoolean(getRow(i).get(3)));
+            Homework savedHW = new Homework(getRow(i).get(0), getRow(i).get(1), LocalDateTime.parse(getRow(i).get(2)), Boolean.parseBoolean(getRow(i).get(3)));
             table.getItems().add(savedHW);
         }
 

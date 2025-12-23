@@ -31,7 +31,7 @@
             </font>
         </Button>
       <TimePicker fx:id="dateTimePicker" editable="true" layoutX="102.0" layoutY="275.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="49.0" prefWidth="295.0" />
-      <TableView fx:id="table" layoutX="450.0" layoutY="74.0" prefHeight="450.0" prefWidth="468.0">
+      <TableView fx:id="table" layoutX="450.0" layoutY="74.0" prefHeight="450.0" prefWidth="475.0">
           <columns>
               <TableColumn fx:id="cName" prefWidth="125.0" text="Name" />
               <TableColumn fx:id="cSubject" prefWidth="92.0" text="Subject" />
@@ -41,6 +41,11 @@
       </TableView>
       <MenuBar layoutY="1.0">
         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="switchCompleted" mnemonicParsing="false" onAction="#changeCompleted" text="Toggle completed" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="VIew">
             <items>
                   <MenuItem fx:id="lightModeSwitch" mnemonicParsing="false" onAction="#switchToLight" text="Light Mode" />

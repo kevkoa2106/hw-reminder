@@ -23,11 +23,11 @@ public class CSVHandling {
             Iterator<CsvRecord> it = csv.iterator();
 
             if (it.hasNext()) {
-                headers = it.next().getFields(); // first row = headers
+                headers = new ArrayList<>(it.next().getFields());
             }
 
             while (it.hasNext()) {
-                rows.add(it.next().getFields()); // each row stays grouped
+                rows.add(new ArrayList<>(it.next().getFields()));
             }
         }
 
@@ -40,12 +40,36 @@ public class CSVHandling {
         try (CsvWriter csv = CsvWriter.builder()
                 .build(file, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
 
-            // Write header only if file is new/empty
             if (!fileExists) {
                 csv.writeRecord("name", "subject", "duedate", "completed");
             }
 
             csv.writeRecord(val1, val2, val3.toString(), val4.toString());
+        }
+    }
+
+    public static void updateCompleted(Path file, String homeworkName, boolean completed) throws IOException {
+        CsvData data = readFromCSV(file);
+
+        int completedCol = data.headers().indexOf("completed");
+        int nameCol = data.headers().indexOf("name");
+
+        for (List<String> row : data.rows()) {
+            if (row.get(nameCol).equals(homeworkName)) {
+                row.set(completedCol, String.valueOf(completed));
+                break;
+            }
+        }
+
+        writeAll(file, data);
+    }
+
+    public static void writeAll(Path file, CsvData data) throws IOException {
+        try (CsvWriter writer = CsvWriter.builder().build(file)) {
+            writer.writeRecord(data.headers());
+            for (List<String> row : data.rows()) {
+                writer.writeRecord(row);
+            }
         }
     }
 }
