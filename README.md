@@ -26,5 +26,4 @@ Technologies used in the project:
 
 *   JavaFX
 *   JUnit 5
-*   GemsFX
-*   AtlantaFX
+*   FastCSV
