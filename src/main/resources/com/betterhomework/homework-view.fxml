@@ -3,6 +3,9 @@
 <?import com.dlsc.gemsfx.TimePicker?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -28,14 +31,6 @@
             </font>
         </Button>
       <TimePicker fx:id="dateTimePicker" editable="true" layoutX="102.0" layoutY="275.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="49.0" prefWidth="295.0" />
-<!--      <AdvancedTableView fx:id="table" editable="true" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="367.0">-->
-<!--         <columns>-->
-<!--            <TableColumn fx:id="cName" prefWidth="95.0" text="Name" />-->
-<!--            <TableColumn fx:id="cSubject" prefWidth="100.0" text="Subject" />-->
-<!--            <TableColumn fx:id="cDueDate" prefWidth="88.0" text="Due Date" />-->
-<!--            <TableColumn fx:id="cCompleted" prefWidth="83.0" text="Completed" />-->
-<!--         </columns>-->
-<!--      </AdvancedTableView>-->
       <TableView fx:id="table" layoutX="450.0" layoutY="74.0" prefHeight="450.0" prefWidth="468.0">
           <columns>
               <TableColumn fx:id="cName" prefWidth="125.0" text="Name" />
@@ -44,5 +39,20 @@
               <TableColumn fx:id="cCompleted" prefWidth="120.0" text="Completed" />
           </columns>
       </TableView>
+      <MenuBar layoutY="1.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="VIew">
+            <items>
+                  <MenuItem fx:id="lightModeSwitch" mnemonicParsing="false" onAction="#switchToLight" text="Light Mode" />
+              <MenuItem fx:id="darkModeSwitch" mnemonicParsing="false" onAction="#switchToDark" text="Dark mode" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
     </children>
 </AnchorPane>

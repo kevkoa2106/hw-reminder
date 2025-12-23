@@ -3,6 +3,8 @@ module com.betterhomework {
     requires javafx.fxml;
     requires com.dlsc.gemsfx;
     requires com.sshtools.twoslices;
+    requires de.siegmar.fastcsv;
+    requires atlantafx.base;
 
     opens com.betterhomework to javafx.fxml;
     exports com.betterhomework;
