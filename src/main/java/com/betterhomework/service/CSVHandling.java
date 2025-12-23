@@ -1,5 +1,6 @@
 package com.betterhomework.service;
 
+import com.betterhomework.models.CsvData;
 import de.siegmar.fastcsv.reader.CsvReader;
 import de.siegmar.fastcsv.reader.CsvRecord;
 import de.siegmar.fastcsv.writer.CsvWriter;
@@ -10,16 +11,27 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CSVHandling {
-    public static List<String> readFromCSV(Path file) throws IOException {
-        List<String> resp = new ArrayList<>();
+    public static CsvData readFromCSV(Path file) throws IOException {
+        List<String> headers = new ArrayList<>();
+        List<List<String>> rows = new ArrayList<>();
+
         try (CsvReader<CsvRecord> csv = CsvReader.builder().ofCsvRecord(file)) {
-            csv.forEach(rec -> resp.add(String.valueOf(rec.getFields())));
+            Iterator<CsvRecord> it = csv.iterator();
+
+            if (it.hasNext()) {
+                headers = it.next().getFields(); // first row = headers
+            }
+
+            while (it.hasNext()) {
+                rows.add(it.next().getFields()); // each row stays grouped
+            }
         }
 
-        return resp;
+        return new CsvData(headers, rows);
     }
 
     public static void writeToCSV(Path file, String val1, String val2, LocalDateTime val3, Boolean val4) throws IOException {
