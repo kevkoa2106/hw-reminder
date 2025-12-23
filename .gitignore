@@ -3,6 +3,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .kotlin
+main/
+
+### CLAUDE ###
+CLAUDE.md
+docs/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
