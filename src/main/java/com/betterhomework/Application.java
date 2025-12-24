@@ -1,8 +1,6 @@
 package com.betterhomework;
 
-import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
-import atlantafx.base.theme.PrimerDark;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,7 +14,7 @@ public class Application extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("homework-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(Application.class.getResource("atlantafx.css").toExternalForm());
-        stage.setTitle("Hello!");
+        stage.setTitle("HW reminder/tracker");
         stage.setScene(scene);
         stage.show();
     }

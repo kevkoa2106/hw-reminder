@@ -6,7 +6,11 @@ import com.betterhomework.Application;
 import com.betterhomework.models.CsvData;
 import com.betterhomework.models.Homework;
 import com.betterhomework.service.CSVHandling;
+import com.betterhomework.service.Reminder;
 import com.dlsc.gemsfx.TimePicker;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import com.sshtools.twoslices.Toast;
 import com.sshtools.twoslices.ToastType;
 import javafx.fxml.FXML;
@@ -32,7 +36,7 @@ public class HomeworkController {
     @FXML private TableColumn<Homework, Boolean> cCompleted;
     @FXML private TableView<Homework> table;
 
-    final private Path file = Paths.get("/Users/khoa/Documents/code shi/Java/better-homework/src/main/resources/com/betterhomework/data.csv");
+    final private Path file = Paths.get("src/main/resources/com/betterhomework/data.csv");
 
     CsvData csvData;
     {
@@ -46,7 +50,6 @@ public class HomeworkController {
     @FXML
     public void changeCompleted() throws IOException {
         Homework selected = table.getSelectionModel().getSelectedItem();
-//        int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selected != null) {
             selected.setCompleted(true);
             table.refresh();
@@ -55,21 +58,29 @@ public class HomeworkController {
     }
 
     @FXML
+    public void deleteSelectedHomework() throws IOException {
+        Homework selected = table.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            CSVHandling.deleteRow(file, selected.getName());
+        }
+    }
+
+    @FXML
     public void btnInsert() throws IOException {
         if (nameField.getText().isEmpty()) {
-            Toast.toast(ToastType.INFO, "Missing name", "Please select a time for the homework due date.");
+            Toast.toast(ToastType.ERROR, "Missing name", "Please select a time for the homework due date.");
             return;
         }
         if (subjectField.getText().isEmpty()) {
-            Toast.toast(ToastType.INFO, "Missing subject", "Please select a time for the homework due date.");
+            Toast.toast(ToastType.ERROR, "Missing subject", "Please select a time for the homework due date.");
             return;
         }
         if (dueDatePicker.getValue() == null) {
-            Toast.toast(ToastType.INFO, "Missing date", "Please select a time for the homework due date.");
+            Toast.toast(ToastType.ERROR, "Missing date", "Please select a time for the homework due date.");
             return;
         }
         if (dateTimePicker.getValue() == null) {
-            Toast.toast(ToastType.INFO, "Missing time", "Please select a time for the homework due date.");
+            Toast.toast(ToastType.ERROR, "Missing time", "Please select a time for the homework due date.");
             return;
         }
 
@@ -117,5 +128,12 @@ public class HomeworkController {
         cSubject.setCellValueFactory(new PropertyValueFactory<>("subject"));
         cDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         cCompleted.setCellValueFactory(new PropertyValueFactory<>("completed"));
+
+        // Check for reminders every second
+        Timeline reminderTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            Reminder.remind();
+        }));
+        reminderTimeline.setCycleCount(Timeline.INDEFINITE);
+        reminderTimeline.play();
     }
 }

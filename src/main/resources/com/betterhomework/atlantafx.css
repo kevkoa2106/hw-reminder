@@ -2660,8 +2660,13 @@
     -fx-background-color: -color-fg-default;
 }
 
-/* Target the notification bar container */
-.notification-bar > .pane {
+/* Target the notification bar container - apply to ALL notification types */
+.notification-bar > .pane,
+.notification-bar.warning > .pane,
+.notification-bar.error > .pane,
+.notification-bar.info > .pane,
+.notification-bar.confirm > .pane,
+.notification-bar .pane {
     /* Use AtlantaFX's default background color variable */
     -fx-background-color: -color-bg-default;
 

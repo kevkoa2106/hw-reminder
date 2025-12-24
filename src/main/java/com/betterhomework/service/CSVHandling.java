@@ -72,4 +72,11 @@ public class CSVHandling {
             }
         }
     }
+
+    public static void deleteRow(Path file, String homeworkName) throws IOException {
+        CsvData data = readFromCSV(file);
+        int nameCol = data.headers().indexOf("name");
+        data.rows().removeIf(row -> row.get(nameCol).equals(homeworkName));
+        writeAll(file, data);
+    }
 }
