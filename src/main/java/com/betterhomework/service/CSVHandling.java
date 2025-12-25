@@ -15,12 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CSVHandling {
-    private static void writeHeadersIfEmpty(CsvWriter csv, Path file) {
-        if (!file.toFile().exists() || file.toFile().length() == 0) {
-            csv.writeRecord("name", "subject", "duedate", "completed");
-        }
-    }
-
     public static CsvData readFromCSV(Path file) throws IOException {
         List<String> headers = new ArrayList<>();
         List<List<String>> rows = new ArrayList<>();
@@ -35,24 +29,18 @@ public class CSVHandling {
             while (it.hasNext()) {
                 rows.add(new ArrayList<>(it.next().getFields()));
             }
-        } catch (IOException e) {
-            try (CsvWriter csv = CsvWriter.builder()
-                    .build(file, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                writeHeadersIfEmpty(csv, file);
-            }
-            throw e;
         }
 
         return new CsvData(headers, rows);
     }
 
     public static void writeToCSV(Path file, String val1, String val2, LocalDateTime val3, Boolean val4) throws IOException {
-        boolean needsHeaders = !file.toFile().exists() || file.toFile().length() == 0;
+        boolean fileExists = file.toFile().exists() && file.toFile().length() > 0;
 
         try (CsvWriter csv = CsvWriter.builder()
                 .build(file, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
 
-            if (needsHeaders) {
+            if (!fileExists) {
                 csv.writeRecord("name", "subject", "duedate", "completed");
             }
 
