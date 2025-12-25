@@ -8,12 +8,6 @@
 
 <img src="https://i.ibb.co/cSp5GXv8/Screenshot-2025-12-23-at-21-36-04.jpg" alt="project-screenshot" width="800" height="500/">
 
-
-## Demo
-
-![Demo](https://i.ibb.co/v6jR3WGV/1225-ezgif-com-speed.gif)
-
-
   
 <h2>🧐 Features</h2>
 
