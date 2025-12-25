@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Reminder {
-    private static final Path file = Paths.get("src/main/resources/com/betterhomework/data.csv");
+    private static final Path file = Paths.get("data.csv");
 
     private static final Set<String> notifiedHomework = new HashSet<>();
 

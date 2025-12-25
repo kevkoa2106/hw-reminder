@@ -36,7 +36,7 @@ public class HomeworkController {
     @FXML private TableColumn<Homework, Boolean> cCompleted;
     @FXML private TableView<Homework> table;
 
-    final private Path file = Paths.get("src/main/resources/com/betterhomework/data.csv");
+    final private Path file = Paths.get("data.csv");
 
     CsvData csvData;
     {
