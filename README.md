@@ -5,9 +5,9 @@
 <p id="description">Just a little homework tracker/reminder</p>
 
 ## Table of Contents
-- [Installation](#installation)
-- [Features](#features)
-- [Technologies used](#built-with)
+- [Installation](https://github.com/kevkoa2106/hw-reminder?tab=readme-ov-file#%EF%B8%8F-installation)
+- [Features](https://github.com/kevkoa2106/hw-reminder?tab=readme-ov-file#-features)
+- [Technologies used](https://github.com/kevkoa2106/hw-reminder?tab=readme-ov-file#-built-with)
 
 <h2>Project Demos & Screenshots:</h2>
 
