@@ -4,9 +4,16 @@
 
 <p id="description">Just a little homework tracker/reminder</p>
 
-<h2>Project Screenshots:</h2>
+## Table of Contents
+- [Installation](#installation)
+- [Features](#features)
+- [Technologies used](#built-with)
+
+<h2>Project Demos & Screenshots:</h2>
 
 <img src="https://i.ibb.co/cSp5GXv8/Screenshot-2025-12-23-at-21-36-04.jpg" alt="project-screenshot" width="800" height="500/">
+
+<img src="https://github.com/kevkoa2106/hw-reminder/blob/main/img/demo.avif" alt="project-demo" width="800" height="500/">
 
   
 <h2>🧐 Features</h2>
