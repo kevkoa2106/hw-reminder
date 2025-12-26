@@ -87,4 +87,13 @@ class ErrorHandlingTest {
         assertThrows(IOException.class, () ->
                 CSVHandling.updateCompleted(nonExistent, "Some HW", true));
     }
+
+    @Test
+    @DisplayName("Delete on non-existent file throws IOException")
+    void testDeleteNonExistentFile() {
+        Path nonExistent = tempDir.resolve("does_not_exist.csv");
+
+        assertThrows(IOException.class, () ->
+                CSVHandling.deleteRow(nonExistent, "Some HW"));
+    }
 }

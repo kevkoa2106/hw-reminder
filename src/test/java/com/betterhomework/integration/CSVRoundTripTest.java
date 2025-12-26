@@ -147,4 +147,56 @@ class CSVRoundTripTest {
         // Reading should throw exception due to inconsistent columns
         assertThrows(Exception.class, () -> CSVHandling.readFromCSV(testFile));
     }
+
+    @Test
+    @DisplayName("Full CRUD cycle: write, update, delete, read")
+    void testWriteUpdateDeleteRead_Cycle() throws IOException {
+        LocalDateTime dueDate1 = LocalDateTime.of(2024, 12, 25, 10, 30);
+        LocalDateTime dueDate2 = LocalDateTime.of(2024, 12, 26, 14, 00);
+
+        // Create two homeworks
+        CSVHandling.writeToCSV(testFile, "Math HW", "Mathematics", dueDate1, false);
+        CSVHandling.writeToCSV(testFile, "Science HW", "Science", dueDate2, false);
+
+        // Verify initial state
+        CsvData initialData = CSVHandling.readFromCSV(testFile);
+        assertEquals(2, initialData.rows().size());
+
+        // Update first homework
+        CSVHandling.updateCompleted(testFile, "Math HW", true);
+
+        // Delete second homework
+        CSVHandling.deleteRow(testFile, "Science HW");
+
+        // Read and verify final state
+        CsvData finalData = CSVHandling.readFromCSV(testFile);
+        assertEquals(1, finalData.rows().size());
+        assertEquals("Math HW", finalData.rows().get(0).get(0));
+        assertEquals("true", finalData.rows().get(0).get(3));
+    }
+
+    @Test
+    @DisplayName("Delete then write maintains proper file structure")
+    void testDeleteThenWrite() throws IOException {
+        LocalDateTime dueDate = LocalDateTime.of(2024, 12, 25, 10, 30);
+
+        // Create homework
+        CSVHandling.writeToCSV(testFile, "Original HW", "Math", dueDate, false);
+
+        // Delete it
+        CSVHandling.deleteRow(testFile, "Original HW");
+
+        // Verify file is empty but has headers
+        CsvData afterDelete = CSVHandling.readFromCSV(testFile);
+        assertTrue(afterDelete.rows().isEmpty());
+        assertEquals(4, afterDelete.headers().size());
+
+        // Write new homework
+        CSVHandling.writeToCSV(testFile, "New HW", "Science", dueDate.plusDays(1), false);
+
+        // Verify new homework was added correctly
+        CsvData afterWrite = CSVHandling.readFromCSV(testFile);
+        assertEquals(1, afterWrite.rows().size());
+        assertEquals("New HW", afterWrite.rows().get(0).get(0));
+    }
 }

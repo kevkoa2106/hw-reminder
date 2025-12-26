@@ -3,13 +3,16 @@ package com.betterhomework.controllers;
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
 import com.betterhomework.Application;
+import com.betterhomework.Launcher;
 import com.betterhomework.models.CsvData;
 import com.betterhomework.models.Homework;
 import com.betterhomework.service.CSVHandling;
 import com.betterhomework.service.Reminder;
 import com.dlsc.gemsfx.TimePicker;
+import com.dustinredmond.fxtrayicon.FXTrayIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import com.sshtools.twoslices.Toast;
 import com.sshtools.twoslices.ToastType;
@@ -37,6 +40,7 @@ public class HomeworkController {
     @FXML private TableView<Homework> table;
 
     final private Path file = Paths.get("src/main/resources/com/betterhomework/data.csv");
+    FXTrayIcon trayIcon;
 
     CsvData csvData;
     {
@@ -45,6 +49,10 @@ public class HomeworkController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setTrayIcon(FXTrayIcon icon) {
+        this.trayIcon = icon;
     }
 
     @FXML
@@ -68,19 +76,19 @@ public class HomeworkController {
     @FXML
     public void btnInsert() throws IOException {
         if (nameField.getText().isEmpty()) {
-            Toast.toast(ToastType.ERROR, "Missing name", "Please select a time for the homework due date.");
+            trayIcon.showErrorMessage("Missing name", "Please type in a name for the homework due date.");
             return;
         }
         if (subjectField.getText().isEmpty()) {
-            Toast.toast(ToastType.ERROR, "Missing subject", "Please select a time for the homework due date.");
+            trayIcon.showErrorMessage("Missing subject", "Please type in a subject for the homework due date.");
             return;
         }
         if (dueDatePicker.getValue() == null) {
-            Toast.toast(ToastType.ERROR, "Missing date", "Please select a time for the homework due date.");
+            trayIcon.showErrorMessage("Missing due date", "Please select a date for the homework due date.");
             return;
         }
         if (dateTimePicker.getValue() == null) {
-            Toast.toast(ToastType.ERROR, "Missing time", "Please select a time for the homework due date.");
+            trayIcon.showErrorMessage("Missing time", "Please select a time for the homework due date.");
             return;
         }
 
@@ -97,7 +105,7 @@ public class HomeworkController {
         dateTimePicker.setValue(LocalTime.now());
         CSVHandling.writeToCSV(file, newHomework.getName(), newHomework.getSubject(), newHomework.getDueDate(), newHomework.isCompleted());
 
-        Toast.toast(ToastType.INFO, "Success", "Homework added successfully.");
+        trayIcon.showInfoMessage("Success", "Homework added successfully.");
     }
 
     @FXML

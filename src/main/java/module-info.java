@@ -5,6 +5,7 @@ module com.betterhomework {
     requires com.sshtools.twoslices;
     requires de.siegmar.fastcsv;
     requires atlantafx.base;
+    requires com.dustinredmond.fxtrayicon;
 
     opens com.betterhomework to javafx.fxml;
     exports com.betterhomework;

@@ -141,4 +141,76 @@ class ControllerServiceTest {
 
         assertTrue(homeworks.isEmpty());
     }
+
+    // Simulates controller's deleteSelectedHomework logic
+    private void simulateDeleteHomework(Path file, Homework homework) throws IOException {
+        if (homework != null) {
+            CSVHandling.deleteRow(file, homework.getName());
+        }
+    }
+
+    @Test
+    @DisplayName("Delete homework removes it from CSV file")
+    void testDeleteHomework_RemovesFromFile() throws IOException {
+        LocalDateTime dueDate = LocalDateTime.of(2024, 12, 25, 10, 30);
+
+        // Insert homework
+        simulateInsertHomework(testFile, "ToDelete HW", "Subject", dueDate);
+
+        // Verify it exists
+        CsvData dataBefore = CSVHandling.readFromCSV(testFile);
+        assertEquals(1, dataBefore.rows().size());
+
+        // Create homework object (as if selected from table)
+        Homework selected = new Homework("ToDelete HW", "Subject", dueDate, false);
+
+        // Delete it
+        simulateDeleteHomework(testFile, selected);
+
+        // Verify it's gone
+        CsvData dataAfter = CSVHandling.readFromCSV(testFile);
+        assertTrue(dataAfter.rows().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Delete one of multiple homeworks leaves others intact")
+    void testDeleteHomework_LeavesOthersIntact() throws IOException {
+        LocalDateTime dueDate = LocalDateTime.of(2024, 12, 25, 10, 30);
+
+        // Insert multiple homeworks
+        simulateInsertHomework(testFile, "Keep HW 1", "Math", dueDate);
+        simulateInsertHomework(testFile, "Delete HW", "Science", dueDate.plusDays(1));
+        simulateInsertHomework(testFile, "Keep HW 2", "History", dueDate.plusDays(2));
+
+        // Verify all three exist
+        CsvData dataBefore = CSVHandling.readFromCSV(testFile);
+        assertEquals(3, dataBefore.rows().size());
+
+        // Delete the middle one
+        Homework toDelete = new Homework("Delete HW", "Science", dueDate.plusDays(1), false);
+        simulateDeleteHomework(testFile, toDelete);
+
+        // Verify only two remain
+        CsvData dataAfter = CSVHandling.readFromCSV(testFile);
+        assertEquals(2, dataAfter.rows().size());
+        assertEquals("Keep HW 1", dataAfter.rows().get(0).get(0));
+        assertEquals("Keep HW 2", dataAfter.rows().get(1).get(0));
+    }
+
+    @Test
+    @DisplayName("Delete null homework does nothing")
+    void testDeleteHomework_NullHomework() throws IOException {
+        LocalDateTime dueDate = LocalDateTime.of(2024, 12, 25, 10, 30);
+
+        // Insert homework
+        simulateInsertHomework(testFile, "Keep HW", "Subject", dueDate);
+
+        // Try to delete null
+        simulateDeleteHomework(testFile, null);
+
+        // Verify homework still exists
+        CsvData dataAfter = CSVHandling.readFromCSV(testFile);
+        assertEquals(1, dataAfter.rows().size());
+        assertEquals("Keep HW", dataAfter.rows().get(0).get(0));
+    }
 }

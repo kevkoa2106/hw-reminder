@@ -1,6 +1,7 @@
 package com.betterhomework.service;
 
 import com.betterhomework.models.CsvData;
+import com.dustinredmond.fxtrayicon.FXTrayIcon;
 import com.sshtools.twoslices.Toast;
 import com.sshtools.twoslices.ToastType;
 
@@ -17,6 +18,11 @@ public class Reminder {
 
     private static final Set<String> notifiedHomework = new HashSet<>();
 
+    static FXTrayIcon trayIcon;
+    public static void setTrayIcon(FXTrayIcon icon) {
+        trayIcon = icon;
+    }
+
     public static void remind() {
         try {
             CsvData csvData = CSVHandling.readFromCSV(file);
@@ -30,7 +36,7 @@ public class Reminder {
                 }
 
                 if (Duration.between(LocalDateTime.now(), dueDate).toDays() <= 1) {
-                    Toast.toast(ToastType.WARNING, "Reminder", "You have " + name + " due soon!");
+                    trayIcon.showWarningMessage("Reminder", "You have " + name + " due soon!");
                     notifiedHomework.add(name);
                 }
             }

@@ -161,11 +161,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.sshtools</groupId>
-            <artifactId>two-slices</artifactId>
-            <version>0.9.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.dlsc.gemsfx</groupId>
             <artifactId>gemsfx</artifactId>
             <version>2.16.0</version>
@@ -184,6 +179,16 @@
             <groupId>io.github.mkpaz</groupId>
             <artifactId>atlantafx-base</artifactId>
             <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dustinredmond.fxtrayicon</groupId>
+            <artifactId>FXTrayIcon</artifactId>
+            <version>4.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sshtools</groupId>
+            <artifactId>two-slices</artifactId>
+            <version>0.9.4</version>
         </dependency>
     </dependencies>
 
