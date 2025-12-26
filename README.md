@@ -9,7 +9,6 @@
 <img src="https://i.ibb.co/cSp5GXv8/Screenshot-2025-12-23-at-21-36-04.jpg" alt="project-screenshot" width="800" height="500/">
 
   
-  
 <h2>🧐 Features</h2>
 
 Project's features:
@@ -19,6 +18,12 @@ Project's features:
 *   Reminds you when deadline of homework is getting close
 
   
+## 🛠️ Installation
+
+Download from the [releases](https://github.com/kevkoa2106/hw-reminder/releases/tag/V0.1.0) page
+
+Make sure you have the [latest version of Java (25)](https://www.oracle.com/asean/java/technologies/downloads/#jdk25-windows) installed on your system.
+
   
 <h2>💻 Built with</h2>
 
